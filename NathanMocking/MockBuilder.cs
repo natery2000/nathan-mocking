@@ -63,6 +63,12 @@ namespace NathanMocking
         var mockedMethodIL = mockedMethod.GetILGenerator();
         mockedMethodIL.Emit(OpCodes.Ldarg_0);
         mockedMethodIL.Emit(OpCodes.Call, propertyBuilder.GetGetMethod());
+
+        for (var i = 0; i < method.ParameterTypes.Length; i++)
+        {
+          mockedMethodIL.Emit(OpCodes.Ldarg, i + 1);
+        }
+
         mockedMethodIL.Emit(OpCodes.Callvirt, methodType.GetMethod("Invoke"));
         mockedMethodIL.Emit(OpCodes.Ret);
       }
